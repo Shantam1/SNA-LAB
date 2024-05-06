@@ -1,0 +1,42 @@
+import random
+
+class Graph:
+    def __init__(self, vertices):
+        self.vertices = vertices
+        self.adj_list = {v: [] for v in range(vertices)}
+
+    def add_edge(self, u, v):
+        self.adj_list[u].append(v)
+        self.adj_list[v].append(u)
+
+    def random_walk_no_cycle(self, start, final):
+        current_vertex = start
+        visited = set()
+        visited.add(start)
+
+        while current_vertex != final:
+            neighbors = [v for v in self.adj_list[current_vertex] if v not in visited]
+            if not neighbors:
+                return None  # No path to final node without forming a cycle
+            next_vertex = random.choice(neighbors)
+            visited.add(next_vertex)
+            current_vertex = next_vertex
+
+        return visited
+
+# Example usage:
+g = Graph(6)
+g.add_edge(0, 1)
+g.add_edge(0, 2)
+g.add_edge(1, 3)
+g.add_edge(2, 4)
+g.add_edge(3, 5)
+g.add_edge(4, 5)
+
+start_vertex = 0
+final_vertex = 5
+visited_vertices = g.random_walk_no_cycle(start_vertex, final_vertex)
+if visited_vertices:
+    print("Path from", start_vertex, "to", final_vertex, "without cycle:", visited_vertices)
+else:
+    print("No path from", start_vertex, "to", final_vertex, "without forming a cycle.")
