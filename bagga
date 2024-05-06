@@ -1,0 +1,38 @@
+import random
+
+
+graph = {
+    'a': ['b', 'c'],
+    'b': ['c', 'd'],
+    'c': ['e', 'f'],
+    'd': ['e', 'f', 'b'],
+    'e': ['g', 'h'],
+    'f': ['g', 'h'],
+    'g': ['i'],
+    'h': ['i'],
+    'i': ['j'],
+    'j': []
+}
+
+def random_walk(start, end):
+    current_node = start
+
+    while current_node != end:
+        print("Current node:", current_node)
+
+        if current_node == 'd':
+            if end == 'j':
+                next_node = 'e'
+            elif end == 'i':
+                next_node = 'f'
+            elif end == 'h':
+                next_node = 'b'
+        else:
+            next_node = random.choice(graph[current_node])
+
+        current_node = next_node
+
+    print("Reached destination", end)
+
+# Perform the random walk from 'a' to 'j'
+random_walk('a', 'i')
